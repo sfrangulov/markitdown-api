@@ -130,4 +130,4 @@ async def process_file(file: UploadFile = File(...)):
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8490)
+    uvicorn.run(app, host="0.0.0.0", port=8490, proxy_headers=True, forwarded_allow_ips="*")

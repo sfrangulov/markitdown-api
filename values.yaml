@@ -1,0 +1,29 @@
+#docker build -t sfrangulov/markitdown-api:0.0.1 .
+#docker push sfrangulov/markitdown-api:0.0.1
+#helm repo add onechart https://chart.onechart.dev && helm upgrade markitdown-api  onechart/onechart --install --wait --atomic --namespace=default --values=values.yaml
+#docker run -it --rm --name markitdown-api -p 8490:8490 sfrangulov/markitdown-api:0.0.1
+
+image:
+  repository: sfrangulov/markitdown-api
+  tag: 0.0.1
+  pullPolicy: Always
+  pullSecrets:
+    - regcred
+
+containerPort: 8490
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: lets-encrypt
+    nginx.ingress.kubernetes.io/proxy-set-headers: "true"
+  host: markitdown.furnitech.app
+  tlsEnabled: true
+
+resources:
+  limits:
+    cpu: "4000m"
+    memory: "4000Mi"
+  requests:
+    cpu: "200m"
+    memory: "500Mi"
