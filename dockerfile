@@ -18,6 +18,20 @@ RUN uv pip install --no-cache-dir -r requirements.txt
 # Stage 2: Final stage
 FROM python:3.13-slim
 
+ENV DEBIAN_FRONTEND=noninteractive
+ENV EXIFTOOL_PATH=/usr/bin/exiftool
+ENV FFMPEG_PATH=/usr/bin/ffmpeg
+ENV MARKITDOWN_ENABLE_PLUGINS=True
+
+# Runtime dependency
+# NOTE: Add any additional MarkItDown plugins here
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ffmpeg \
+    exiftool
+
+# Cleanup
+RUN rm -rf /var/lib/apt/lists/*
+
 # Create a non-root user
 RUN groupadd -r appuser && useradd -r -g appuser appuser
 
