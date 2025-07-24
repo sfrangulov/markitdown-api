@@ -81,7 +81,8 @@ FORBIDDEN_EXTENSIONS = [
 
 def is_forbidden_file(filename):
     return (
-        "." in filename and filename.rsplit(".", 1)[1].lower() in FORBIDDEN_EXTENSIONS
+        "." in filename and filename.rsplit(
+            ".", 1)[1].lower() in FORBIDDEN_EXTENSIONS
     )
 
 
@@ -95,7 +96,8 @@ def convert_to_md(filepath: str) -> str:
 
 @app.get("/")
 def read_root():
-    return {"MarkItDown API Server": "hit /docs for endpoint reference"}
+    return {"MarkItDown API Server": "OK"}
+    # return {"MarkItDown API Server": "hit /docs for endpoint reference"}
 
 
 @app.post("/process_file")
@@ -130,4 +132,5 @@ async def process_file(file: UploadFile = File(...)):
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8490, proxy_headers=True, forwarded_allow_ips="*")
+    uvicorn.run(app, host="0.0.0.0", port=8490,
+                proxy_headers=True, forwarded_allow_ips="*")
